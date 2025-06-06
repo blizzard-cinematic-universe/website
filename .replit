@@ -6,9 +6,32 @@ hidden = [".config", "package-lock.json"]
 channel = "stable-24_05"
 
 [deployment]
-run = ["node", "index.js"]
+run = ["npm", "start"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
 localPort = 3000
 externalPort = 80
+
+[rules]
+
+[rules.formatter]
+
+[rules.formatter.fileExtensions]
+
+[rules.formatter.fileExtensions.".js"]
+id = "module:nodejs-22/languageServer:typescript-language-server"
+
+[workflows]
+
+[[workflows.workflow]]
+name = "development"
+mode = "sequential"
+author = 43542282
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
